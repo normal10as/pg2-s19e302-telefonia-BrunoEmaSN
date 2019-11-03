@@ -5,7 +5,7 @@ Public Class Marca
             Return _nombre
         End Get
         Set(value As String)
-            If value.Length < 30 And value.Length > 0 Then
+            If value.Length <= 30 And value.Length > 0 Then
                 _nombre = value
             End If
         End Set

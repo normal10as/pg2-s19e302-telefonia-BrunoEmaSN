@@ -1,5 +1,4 @@
 ﻿Public Class Modelo
-    Inherits Marca
     Private _nombre As String
     Protected _marca As Marca
     Public Overloads Property Nombre As String
@@ -12,9 +11,17 @@
             End If
         End Set
     End Property
-    Public Sub New(nombre As String, marca As String)
-        MyBase.New(marca)
+    Public Property Marca As Marca
+        Get
+            Return _marca
+        End Get
+        Set(value As Marca)
+            _marca = value
+        End Set
+    End Property
+    Public Sub New(nombre As String, marca As Marca)
         Me.Nombre = nombre
+        Me.Marca = marca
     End Sub
     Public Overrides Function ToString() As String
         Return Nombre

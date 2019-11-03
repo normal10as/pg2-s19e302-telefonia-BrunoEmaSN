@@ -19,10 +19,11 @@
         End Set
     End Property
     Public Sub New(razonSocial As String, cuit As String)
+        MyBase.New()
         Me.RazonSocial = razonSocial
         Me.Cuit = cuit
     End Sub
     Public Overrides Function ToString() As String
-        Return RazonSocial & " " & Cuit
+        Return RazonSocial & " " & Cuenta
     End Function
 End Class

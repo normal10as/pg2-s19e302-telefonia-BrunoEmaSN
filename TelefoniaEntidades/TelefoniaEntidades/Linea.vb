@@ -1,10 +1,10 @@
 ﻿Public Class Linea
-    Inherits Equipo
     Private _codigoArea As UShort
     Private _numero As UInteger
     Private _estado As String
-    Private _estado2 As String
+    Private _estadoActivo As Boolean = True
     Private _equipo As Equipo
+    Private _cliente As List(Of Cliente)
     Public Property codigoArea As UShort
         Get
             Return _codigoArea
@@ -27,26 +27,47 @@
     End Property
     Public ReadOnly Property Estado As String
         Get
-            Return _estado2
+            If _estadoActivo Then
+                Return "Activo"
+            Else
+                Return "Suspendido"
+            End If
         End Get
     End Property
-    Public Sub New(codigoArea As UShort, numero As UInteger, equipo As Equipo)
-        MyBase.New(equipo.Nombre, equipo.Serie)
+    Public Property Equipo As Equipo
+        Get
+            Return _equipo
+        End Get
+        Set(value As Equipo)
+            _equipo = value
+        End Set
+    End Property
+    '----------------------------------EN PROCESO DE DESARROLLO------------------------------------
+    Public Sub New(codigoArea As UShort, numero As UInteger, equipo As Equipo, cliente As Cliente)
+        _cliente = New List(Of Cliente)
         Me.codigoArea = codigoArea
         Me.Numero = numero
+        Me.Equipo = equipo
+        AddLinea(cliente)
     End Sub
+    '-----------------------------------------------------------------------------------------------
     Public Sub Suspender()
-        _estado2 = "Suspendido"
+        _estadoActivo = False
     End Sub
     Public Sub Reactivar()
-        _estado2 = "Activo"
+        _estadoActivo = True
     End Sub
     Public Overrides Function ToString() As String
-        If Estado = "Suspendido" Then
-            Return codigoArea & "-" & Numero & ":" & Estado
-        Else
-            Return codigoArea & "-" & Numero
+        Dim resultado As String = codigoArea & "-" & Numero
+        If Not _estadoActivo Then
+            resultado &= ":" & Estado
         End If
+        Return resultado
     End Function
-
+    '----------------WARNING----------------
+    Private Sub AddLinea(cliente As Cliente)
+        cliente.Linea = Me
+        _cliente.Add(cliente)
+    End Sub
+    '---------------------------------------
 End Class
